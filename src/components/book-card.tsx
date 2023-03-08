@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import Book from "../models/book";
 import './book-card.css'
 
@@ -9,10 +9,21 @@ type Props = {
 
 const BookCard: FunctionComponent<Props> = ({book, borderColor = '#009688'}) => {
 
+    const [color, setColor] = useState<string>();
+
+    const showBorder = () => {
+        setColor(borderColor);
+    }
+
+    const hideBorder = () => {
+        setColor('#f5f5f5');
+    }
+
+
     return (
 
-        <div className="col s6 m4">
-                    <div className="card vertical z-depth-5" style={{borderColor: borderColor}}> 
+        <div className="col s6 m4" onMouseEnter={showBorder} onMouseLeave={hideBorder}>
+                    <div className="card vertical z-depth-5" style={{ borderColor: color }}> 
                         <div className="card-image">
                             <img src={book.cover} alt={book.name}/>
                         </div>
