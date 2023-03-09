@@ -19,6 +19,9 @@ const BookCard: FunctionComponent<Props> = ({book, borderColor = '#009688'}) => 
         setColor('#f5f5f5');
     }
 
+    const formatDate = (date: Date): string => {
+        return `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`
+    }
 
     return (
 
@@ -31,6 +34,8 @@ const BookCard: FunctionComponent<Props> = ({book, borderColor = '#009688'}) => 
                         <div className="card-content">
                             <h5>{book.name}</h5>
                             <p>{book.author}</p>
+                            <p><small>{formatDate(book.created)}</small></p>
+
                         </div>   
                         </div>
                     </div>
