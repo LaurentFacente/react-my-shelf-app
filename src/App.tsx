@@ -3,6 +3,7 @@ import { FunctionComponent } from 'react';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import BooksDetail from './pages/book-details';
 import BookList from './pages/book-list';
+import PageNotFound from './pages/404';
 
 //Typage du composant App (Fonction Component) 
 const App: FunctionComponent = () => { 
@@ -21,6 +22,7 @@ const App: FunctionComponent = () => {
                             <Route exact path="/" component={BookList}/>
                             <Route exact path="/books/" component={BookList}/>
                             <Route path="/books/:id" component={BooksDetail}/>
+                            <Route component={PageNotFound} />
                      </Switch>
                      
                </div>
