@@ -1,13 +1,30 @@
 import React from 'react';
 import { FunctionComponent } from 'react';
-
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import BooksDetail from './pages/book-details';
 import BookList from './pages/book-list';
 
 //Typage du composant App (Fonction Component) 
 const App: FunctionComponent = () => { 
 
  return (
-        <BookList />    
+        <Router>
+               <div>
+                     {/* Barre de navigation commun a toutes les pages*/}
+                     <nav>
+                            <div className='nav-wrapper teal'>
+                                   <Link to='/' className='brand-logo center'>My Shelf</Link>
+                            </div>
+                     </nav>
+                     {/* Systeme de gestion de Routes */}
+                     <Switch>
+                            <Route exact path="/" component={BookList}/>
+                            <Route exact path="/books/" component={BookList}/>
+                            <Route path="/books/:id" component={BooksDetail}/>
+                     </Switch>
+                     
+               </div>
+        </Router>
  )
 }
   

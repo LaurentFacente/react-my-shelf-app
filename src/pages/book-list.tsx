@@ -15,8 +15,8 @@ const BookList: FunctionComponent = () => {
       <h1 className="center">My Shelf</h1>
       <div className="container"> 
         <div className="row"> 
-        {BOOKS.map(book => (
-          <BookCard key={book.id} book={book}/>
+        {books.map(book => (
+          <BookCard key={book.id} book={book} />
         ))}
         </div>
       </div>

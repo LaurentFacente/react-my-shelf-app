@@ -3,7 +3,7 @@ import { RouteComponentProps, Link } from 'react-router-dom';
 import Book from '../models/book';
 import BOOKS from '../models/mock-books';
 import formatDate from '../tools/format-date';
-import formatType from '../tools/format-type';
+import formatType from '../tools/format-type'
   
 type Params = { id: string };
   
@@ -27,7 +27,7 @@ const BooksDetail: FunctionComponent<RouteComponentProps<Params>> = ({ match }) 
             <h2 className="header center">{ book.name }</h2>
             <div className="card hoverable"> 
               <div className="card-image">
-                <img src={book.cover} alt={book.name} style={{width: '250px', margin: '0 auto'}}/>
+                <img src={book.cover} alt={book.name} style={{width: '350px', margin: '0 auto'}}/>
               </div>
               <div className="card-stacked">
                 <div className="card-content">

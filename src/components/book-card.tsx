@@ -1,19 +1,20 @@
 import React, { FunctionComponent, useState } from "react";
-import { types } from "util";
 import Book from "../models/book";
 import './book-card.css'
-import formatDate from "../tools/format-date";
 import formatType from "../tools/format-type";
+import formatDate from "../tools/format-date";
+import { useHistory } from "react-router-dom";
+
 
 type Props = {
     book: Book,
     borderColor?: string,
-    types: string
 };
 
 const BookCard: FunctionComponent<Props> = ({book, borderColor = '#009688'}) => {
 
     const [color, setColor] = useState<string>();
+    const history = useHistory();
 
     const showBorder = () => {
         setColor(borderColor);
@@ -22,10 +23,14 @@ const BookCard: FunctionComponent<Props> = ({book, borderColor = '#009688'}) => 
     const hideBorder = () => {
         setColor('#f5f5f5');
     }
+    const goToBooks = (id: number) => {
+        history.push(`/books/${id}`)
+
+    }
 
     return (
 
-        <div className="col s6 m4" onMouseEnter={showBorder} onMouseLeave={hideBorder}>
+        <div className="col s6 m4" onClick={() => goToBooks(book.id)} onMouseEnter={showBorder} onMouseLeave={hideBorder}>
                     <div className="card vertical z-depth-5" style={{ borderColor: color }}> 
                         <div className="card-image">
                             <img src={book.cover} alt={book.name}/>
