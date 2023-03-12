@@ -25,13 +25,16 @@ const BooksDetail: FunctionComponent<RouteComponentProps<Params>> = ({ match }) 
             <div className="card hoverable"> 
               <div className="card-image">
                 <img src={book.cover} alt={book.name} style={{width: '350px', margin: '0 auto'}}/>
+                <Link to={`/books/edit/${book.id}`} className="btn btn-floating halfway-fab waves-effect waves-light">
+                  <i className='material-icons'>edit</i>
+                </Link>
               </div>
               <div className="card-stacked">
                 <div className="card-content">
                   <table className="bordered striped">
                   <tbody>
                       <tr> 
-                        <td>Titre</td> 
+                        <td>Titre</td>   
                         <td><strong>{ book.name }</strong></td> 
                       </tr>
                       <tr> 
