@@ -1,13 +1,13 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import Book from '../models/book';
-import BOOKS from '../models/mock-books';
 import BookCard from '../components/book-card';
+import BookService from '../services/books-service';
   
 const BookList: FunctionComponent = () => {
   const [books, setBooks] = useState<Book[]>([]);
   
   useEffect(() => {
-    setBooks(BOOKS);
+   BookService.getBooks().then(books => setBooks(books));
   }, []);
   
   return (
