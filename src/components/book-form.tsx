@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Book from '../models/book';
+import BookService from '../services/books-service';
 import formatType from '../tools/format-type';
   
 type Props = {
@@ -113,8 +114,15 @@ const BookForm: FunctionComponent<Props> = ({book}) => {
     const isFormValid = validateForm();
 
     if(isFormValid) {
-    history.push(`/books/${book.id}`);
+      book.name = form.name.value;
+      book.author = form.author.value;
+      book.types = form.types.value;
+      BookService.updateBook(book).then(() => history.push(`/books/${book.id}`));
     }
+  }
+
+  const deleteBook = () => {
+    BookService.deleteBook(book).then(() => history.push(`/books`));
   }
 
    
@@ -125,6 +133,9 @@ const BookForm: FunctionComponent<Props> = ({book}) => {
           <div className="card hoverable"> 
             <div className="card-image">
               <img src={book.cover} alt={book.name} style={{width: '250px', margin: '0 auto'}}/>
+              <span className='btn-floating halfway-fab waves-effect waves-light'>
+                <i onClick={deleteBook} className="material-icons">delete</i>
+              </span>
             </div>
             <div className="card-stacked">
               <div className="card-content">

@@ -25,6 +25,15 @@ export default class BookService {
         .catch(error => this.handleError(error));
     }
 
+    static deleteBook(book: Book):Promise<{}> {
+        return fetch(`http://localhost:3001/books/${book.id}`, {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then(response => response.json())
+        .catch(error => this.handleError(error));
+    }
+
     static isEmpty(data: Object): boolean {
         return Object.keys(data).length === 0;
     }

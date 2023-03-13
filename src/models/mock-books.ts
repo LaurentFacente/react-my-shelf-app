@@ -5,7 +5,7 @@ export const BOOKS: Book[] = [
   id: 1,
   name: "Harry Potter à l'école des sorciers (1997)",
   cover: "https://res.cloudinary.com/the-harry-potter-database/image/upload/c_fill,h_390,w_300/v1590237799/Harry_Potter_1_-_Harry_Potter_and_the_Sorcerers_Stone_-_Mary_Grandpre_blzhwd.jpg",
-  types: ["Roman", "Fanstastique"],
+  types: ["Roman", "Fantastique"],
   author: "J.K. Rowling",
 
   created: new Date()
