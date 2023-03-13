@@ -31,7 +31,7 @@ const BookForm: FunctionComponent<Props> = ({book}) => {
   const history = useHistory();
 
   const types: string[] = [
-    'Roman', 'Productivité', 'Dev Perso', 'Socio', 'Science Fiction','Sport',
+    'Roman', 'Productivité', 'Dev Perso', 'Fantastique', 'Science Fiction','Sport',
     'Historique', 'Psyco', 'Philosophique', 'Combat', 'Apprentissage'
   ];
 
@@ -63,10 +63,58 @@ const BookForm: FunctionComponent<Props> = ({book}) => {
     setForm({...form, ...{ types: newField }});
   }
 
+  const validateForm = () => {
+    let newForm: Form = form;
+    
+    // Validator name
+    if(!/^[-.,_ a-zA-Z0-9áàâäãéèêëíìîïóòôöõúùûüýÿÁÀÂÄÃÉÈÊËÍÌÎÏÓÒÔÖÕÚÙÛÜÝ:/?()]{3,50}$/.test(form.name.value)) {
+      const errorMsg: string = 'Le nom du livre est requis (1-50).';
+      const newField: Field = { value: form.name.value, error: errorMsg, isValid: false };
+      newForm = { ...newForm, ...{ name: newField } };
+    } else {
+      const newField: Field = { value: form.name.value, error: '', isValid: true };
+      newForm = { ...newForm, ...{ name: newField } };
+    }
+
+    // Validator author
+    if(!/^[-.,_ a-zA-Z0-9áàâäãéèêëíìîïóòôöõúùûüýÿÁÀÂÄÃÉÈÊËÍÌÎÏÓÒÔÖÕÚÙÛÜÝ:/?]{3,25}$/.test(form.author.value)) {
+      const errorMsg: string = 'Lauteur du livre est requis (1-25).';
+      const newField: Field = { value: form.author.value, error: errorMsg, isValid: false };
+      newForm = { ...newForm, ...{ author: newField } };
+    } else {
+      const newField: Field = { value: form.author.value, error: '', isValid: true };
+      newForm = { ...newForm, ...{ author: newField } };
+    }
+
+    setForm(newForm);
+    return newForm.name.isValid && newForm.author.isValid;
+  }
+
+  const isTypesValid = (type: string): boolean => {
+    // Cas n°1: Le livre a un seul type, qui correspond au type passé en paramètre.
+    // Dans ce cas on revoie false, car l'utilisateur ne doit pas pouvoir décoché ce type (sinon le pokémon aurait 0 type, ce qui est interdit)
+    if (form.types.value.length === 1 && hasType(type)) {
+      return false;
+    }
+    
+    // Cas n°1: Le livre a au moins 3 types.
+    // Dans ce cas il faut empêcher à l'utilisateur de cocher un nouveau type, mais pas de décocher les types existants.
+    if (form.types.value.length >= 3 && !hasType(type)) { 
+      return false; 
+    } 
+    
+    // Après avoir passé les deux tests ci-dessus, on renvoie 'true', 
+    // c'est-à-dire que l'on autorise l'utilisateur à cocher ou décocher un nouveau type.
+    return true;
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(form);
+    const isFormValid = validateForm();
+
+    if(isFormValid) {
     history.push(`/books/${book.id}`);
+    }
   }
 
    
@@ -96,7 +144,7 @@ const BookForm: FunctionComponent<Props> = ({book}) => {
                   {types.map(type => (
                     <div key={type} style={{marginBottom: '10px'}}>
                       <label>
-                        <input id={type} type="checkbox" className="filled-in" value={type} checked={hasType(type)} onChange={e => selectType(type, e)}></input>
+                        <input id={type} type="checkbox" className="filled-in" value={type} disabled={!isTypesValid(type)} checked={hasType(type)} onChange={e => selectType(type, e)}></input>
                         <span>
                           <p className={formatType(type)}>{ type }</p>
                         </span>

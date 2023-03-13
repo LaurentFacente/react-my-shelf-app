@@ -11,7 +11,7 @@ const formatType = (type: string): string => {
       case 'Dev Perso': 
         color = 'green lighten-1'; 
         break; 
-      case 'Socio': 
+      case 'Fantastique': 
         color = 'grey lighten-3'; 
         break; 
       case 'Science Fiction': 
