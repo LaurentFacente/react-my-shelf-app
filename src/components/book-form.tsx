@@ -67,7 +67,7 @@ const BookForm: FunctionComponent<Props> = ({book}) => {
     let newForm: Form = form;
     
     // Validator name
-    if(!/^[-.,_ a-zA-Z0-9áàâäãéèêëíìîïóòôöõúùûüýÿÁÀÂÄÃÉÈÊËÍÌÎÏÓÒÔÖÕÚÙÛÜÝ:/?()]{3,50}$/.test(form.name.value)) {
+    if(!/^[-.,_ a-zA-Z0-9áàâäãéèêëíìîïóòôöõúùûüýÿÁÀÂÄÃÉÈÊËÍÌÎÏÓÒÔÖÕÚÙÛÜÝ:/?()']{3,50}$/.test(form.name.value)) {
       const errorMsg: string = 'Le nom du livre est requis (1-50).';
       const newField: Field = { value: form.name.value, error: errorMsg, isValid: false };
       newForm = { ...newForm, ...{ name: newField } };
@@ -77,7 +77,7 @@ const BookForm: FunctionComponent<Props> = ({book}) => {
     }
 
     // Validator author
-    if(!/^[-.,_ a-zA-Z0-9áàâäãéèêëíìîïóòôöõúùûüýÿÁÀÂÄÃÉÈÊËÍÌÎÏÓÒÔÖÕÚÙÛÜÝ:/?]{3,25}$/.test(form.author.value)) {
+    if(!/^[-.,_ a-zA-Z0-9áàâäãéèêëíìîïóòôöõúùûüýÿÁÀÂÄÃÉÈÊËÍÌÎÏÓÒÔÖÕÚÙÛÜÝ:/?']{3,25}$/.test(form.author.value)) {
       const errorMsg: string = 'Lauteur du livre est requis (1-25).';
       const newField: Field = { value: form.author.value, error: errorMsg, isValid: false };
       newForm = { ...newForm, ...{ author: newField } };
@@ -132,11 +132,21 @@ const BookForm: FunctionComponent<Props> = ({book}) => {
                 <div className="form-group">
                   <label htmlFor="name">Titre</label>
                   <input id="name" name="name" type="text" className="form-control" value={form.name.value} onChange={e => handleInputChange(e)}></input>
+                   {/* error */}
+                   {form.name.error &&
+                  <div className="card-panel red accent-1"> 
+                   {form.name.error} 
+                  </div>} 
                 </div>
                 {/* Book author */}
                 <div className="form-group">
                   <label htmlFor="author">Auteur</label>
                   <input id="author" name="author" type="text" className="form-control" value={form.author.value} onChange={e => handleInputChange(e)}></input>
+                   {/* error */}
+                   {form.author.error &&
+                  <div className="card-panel red accent-1"> 
+                   {form.author.error} 
+                  </div>} 
                 </div>
                 {/* Book types */}
                 <div className="form-group">
