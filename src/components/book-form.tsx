@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Book from '../models/book';
 import formatType from '../tools/format-type';
   
@@ -21,16 +22,19 @@ type Form = {
   
 const BookForm: FunctionComponent<Props> = ({book}) => {
 
-    const [form, setForm] = useState<Form>({
-        name : {value: book.name, isValid: true},
-        author : {value: book.author, isValid: true},
-        types : {value: book.types, isValid: true} 
-    })
-  
+  const [form, setForm] = useState<Form>({
+      name : {value: book.name, isValid: true},
+      author : {value: book.author, isValid: true},
+      types : {value: book.types, isValid: true} 
+  })
+
+  const history = useHistory();
+
   const types: string[] = [
     'Roman', 'Productivité', 'Dev Perso', 'Socio', 'Science Fiction','Sport',
     'Historique', 'Psyco', 'Philosophique', 'Combat', 'Apprentissage'
   ];
+
 
   const hasType = (type: string): boolean => {
     return form.types.value.includes(type); 
@@ -59,9 +63,15 @@ const BookForm: FunctionComponent<Props> = ({book}) => {
     setForm({...form, ...{ types: newField }});
   }
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(form);
+    history.push(`/books/${book.id}`);
+  }
+
    
   return (
-    <form>
+    <form onSubmit={e => handleSubmit(e)}>
       <div className="row">
         <div className="col s12 m8 offset-m2">
           <div className="card hoverable"> 
