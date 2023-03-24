@@ -5,15 +5,15 @@ export default class Book {
     cover: string;
     types: Array<string>; 
     author: string;
-    created: Date;
+    created?: Date;
      
     // 2. Définition des valeurs par défaut des propriétés d'un livre.
     constructor(
      id: number,
-     name: string = 'name',
-     cover: string = 'http://...',
-     types: Array<string> = ['Normal'],
-     author: string = 'name',
+     name: string = 'Titre',
+     cover: string = 'https://...',
+     types: Array<string> = [],
+     author: string = 'Auteur',
      created: Date = new Date()
     ) {
      // 3. Initialisation des propiétés d'un livres.

@@ -20,7 +20,7 @@ const BookEdit: FunctionComponent<RouteComponentProps<Params>> = ({ match }) => 
       { book ? (
         <div className="row">
             <h2 className="header center">Éditer { book.name }</h2>
-            <BookForm book={book}></BookForm>
+            <BookForm book={book} isEditForm={true}></BookForm>
         </div>
       ) : (
         <h4 className="center">Aucun book à afficher !</h4>

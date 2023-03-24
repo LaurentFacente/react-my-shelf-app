@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import Book from '../models/book';
 import BookCard from '../components/book-card';
 import BookService from '../services/books-service';
+import { Link } from 'react-router-dom';
   
 const BookList: FunctionComponent = () => {
   const [books, setBooks] = useState<Book[]>([]);
@@ -19,6 +20,13 @@ const BookList: FunctionComponent = () => {
           <BookCard key={book.id} book={book} />
         ))}
         </div>
+        <Link className='btn-floating btn-large waves-effect waves-light red z-depht-3'
+          style={{position: 'fixed', bottom: '25px', right: '25px'}}
+          to= "/book/add"
+        >
+          <i className='material-icons'>add</i>
+
+        </Link> 
       </div>
     </div> 
   );

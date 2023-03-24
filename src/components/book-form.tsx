@@ -5,7 +5,8 @@ import BookService from '../services/books-service';
 import formatType from '../tools/format-type';
   
 type Props = {
-  book: Book
+  book: Book,
+  isEditForm: boolean
 };
 
 type Field = {
@@ -16,14 +17,16 @@ type Field = {
 }
 
 type Form = {
+    cover: Field,
     name: Field,
     author: Field,
     types: Field
 }
   
-const BookForm: FunctionComponent<Props> = ({book}) => {
+const BookForm: FunctionComponent<Props> = ({book, isEditForm}) => {
 
   const [form, setForm] = useState<Form>({
+      cover : {value: book.cover},
       name : {value: book.name, isValid: true},
       author : {value: book.author, isValid: true},
       types : {value: book.types, isValid: true} 
@@ -64,8 +67,29 @@ const BookForm: FunctionComponent<Props> = ({book}) => {
     setForm({...form, ...{ types: newField }});
   }
 
-  const validateForm = () => {
-    let newForm: Form = form;
+  const isAddForm = () => {
+    return !isEditForm;
+  }
+
+   const validateForm = () => {
+     let newForm: Form = form;
+
+     // Validator url 
+
+    //  if(isAddForm()) {
+    //    const start = "https://"
+    //    if(!form.cover.value.startWith(start)) {
+    //    const errorMsg: string = "L'url n'est pas valide.";
+    //      const newField: Field = {value: form.cover.value, error: errorMsg, isValid: false};
+    //     newForm = {...form, ...{cover : newField}};
+    //    } else {
+    //      const newField: Field = {value: form.cover.value, error: '', isValid: true};
+    //      newForm = {...form, ...{cover : newField}};
+
+    //    }
+    //  }
+
+
     
     // Validator name
     if(!/^[-.,_ a-zA-Z0-9áàâäãéèêëíìîïóòôöõúùûüýÿÁÀÂÄÃÉÈÊËÍÌÎÏÓÒÔÖÕÚÙÛÜÝ:/?()']{3,50}$/.test(form.name.value)) {
@@ -114,11 +138,21 @@ const BookForm: FunctionComponent<Props> = ({book}) => {
     const isFormValid = validateForm();
 
     if(isFormValid) {
+      book.cover = form.cover.value;
       book.name = form.name.value;
       book.author = form.author.value;
       book.types = form.types.value;
-      BookService.updateBook(book).then(() => history.push(`/books/${book.id}`));
+
+      isEditForm ? updateBook() : addBook();
     }
+  }
+
+  const addBook =() => {
+    BookService.addBook(book).then(() => history.push(`/books`));
+  }
+
+  const updateBook =() => {
+    BookService.updateBook(book).then(() => history.push(`/books/${book.id}`));
   }
 
   const deleteBook = () => {
@@ -131,14 +165,28 @@ const BookForm: FunctionComponent<Props> = ({book}) => {
       <div className="row">
         <div className="col s12 m8 offset-m2">
           <div className="card hoverable"> 
+          {isEditForm && (
             <div className="card-image">
               <img src={book.cover} alt={book.name} style={{width: '250px', margin: '0 auto'}}/>
               <span className='btn-floating halfway-fab waves-effect waves-light'>
                 <i onClick={deleteBook} className="material-icons">delete</i>
               </span>
             </div>
+            )}
             <div className="card-stacked">
               <div className="card-content">
+                {/* Book cover */}
+                {isAddForm() && (
+                <div className="form-group">
+                  <label htmlFor="cover">Cover</label>
+                  <input id="cover" name="cover" type="text" className="form-control" value={form.cover.value} onChange={e => handleInputChange(e)}></input>
+                   {/* error */}
+                   {form.cover.error &&
+                  <div className="card-panel red accent-1"> 
+                   {form.cover.error} 
+                  </div>} 
+                </div>
+                )}
                 {/* Book name */}
                 <div className="form-group">
                   <label htmlFor="name">Titre</label>

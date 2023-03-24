@@ -34,6 +34,18 @@ export default class BookService {
         .catch(error => this.handleError(error));
     }
 
+    static addBook(book:Book):Promise<Book> {
+        delete book.created;
+        
+        return fetch(`http://localhost:3001/books/`, {
+            method: 'POST',
+            body: JSON.stringify(book),
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then(response => response.json())
+        .catch(error => this.handleError(error));
+    }
+
     static isEmpty(data: Object): boolean {
         return Object.keys(data).length === 0;
     }
